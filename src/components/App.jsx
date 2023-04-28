@@ -1,16 +1,25 @@
-export const App = () => {
+import FeedbackCounter from "./FeedbackCounter/feedbackCounter";
+
+
+export function App () {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+    <div>
+      <section>
+        <FeedbackCounter/>
+        
+      </section>
+
+      {/* <section className={css.section}>
+        <Statistics title="Upload stats" stats={data} />
+      </section>
+
+      <section className={css.section}>
+        <FriendList friends={friends} />
+      </section>
+
+      <section className={css.section}>
+        <Transactions items={transactions} />
+      </section> */}
     </div>
   );
 };
