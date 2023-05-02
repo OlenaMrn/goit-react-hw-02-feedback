@@ -2,29 +2,8 @@
 import React from 'react';
 import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import { Statistics } from './Statistics/statistics';
-
-// export function App () {
-//   return (
-//     <div>
-//       <section>
-//         {/* <FeedbackCounter/> */}
-        
-//       </section>
-
-//       {/* <section className={css.section}>
-//         <Statistics title="Upload stats" stats={data} />
-//       </section>
-
-//       <section className={css.section}>
-//         <FriendList friends={friends} />
-//       </section>
-
-//       <section className={css.section}>
-//         <Transactions items={transactions} />
-//       </section> */}
-//     </div>
-//   );
-// };
+import { Section } from './Section/Section';
+import { Notification } from './Notification/Notification';
 
 export class App extends React.Component {
   state = {
@@ -58,7 +37,9 @@ export class App extends React.Component {
 
   countPositiveFeedbackPercentage = () => {
   const { good, neutral, bad } = this.state;
-  return Math.round((good * 100) / (good + neutral + bad));
+    const total = Math.round((good * 100) / (good + neutral + bad));
+    
+    return total > 0 ? total : 0;
 }
 
 
@@ -67,18 +48,22 @@ export class App extends React.Component {
     
     return (
       <div>
-        {/* <Header/> */}
-        <h2>Feedback Counter</h2>
+          <Section title="Please leave your feedback">
+          <FeedbackOptions handleClick={this.handleClick} />
+        </Section>
 
-        <FeedbackOptions handleClick={this.handleClick} />
+        {this.countTotalFeedback() === 0 && <Notification message = "There is no feedback" />}
 
-        <Statistics
-          good={good}
-          neutral={neutral}
-          bad={bad}
-          countTotalFeedback={this.countTotalFeedback()}
-          countPositiveFeedbackPercentage={this.countPositiveFeedbackPercentage()}
-        />
+        {this.countTotalFeedback()> 0 && <Section title="Statistics">
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            countTotalFeedback={this.countTotalFeedback()}
+            countPositiveFeedbackPercentage={this.countPositiveFeedbackPercentage()}
+          />
+        </Section>}
+        
       </div>
     );
   }
